@@ -1,14 +1,21 @@
 package me.webserver;
 
+import java.io.IOException;
+import java.net.Socket;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Locale;
+
 /**
  * Created by root on 10/04/15.
  */
 public class HTTPResponse {
     private final String endline = "\r\n";
-    String contentType;
+    MediaType contentType;
     String body;
 
-    public HTTPResponse(String contentType, String body) {
+    public HTTPResponse(MediaType contentType, String body) {
         this.contentType = contentType;
         this.body = body;
     }
@@ -17,9 +24,12 @@ public class HTTPResponse {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("HTTP/1.1 200 OK").append(endline);
+        builder.append("Date: ").append(LocalDate.now()).append(" ").append(LocalTime.now()).append(endline);
         builder.append("Content-Type: ").append(contentType).append(endline);
         builder.append(endline);
-        builder.append(body);
+        if (body != null) {
+            builder.append(body);
+        }
         return builder.toString();
     }
 }
