@@ -1,36 +1,27 @@
-package me.webserver;
+package me.httphandler;
 
 import me.util.Log;
 
-import javax.xml.ws.spi.http.HttpHandler;
 import java.io.*;
 import java.net.Socket;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.channels.SocketChannel;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
 import java.nio.charset.MalformedInputException;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by stuart on 10/04/15.
+ * Created by User on 27/04/2015.
  */
-public class ProcessingThread implements Runnable {
-    public Socket socket;
-    public boolean stop = false;
-    private boolean accepted = false;
+public class Plugin implements me.webserver.Plugin {
     private MediaType type;
     private final String endline = "\r\n";
 
-    public ProcessingThread(Socket socket) {
-        this.socket = socket;
+    @Override
+    public void init() {
+
     }
 
     @Override
-    public void run() {
+    public void handle(Socket socket) {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String line = reader.readLine();
@@ -116,6 +107,10 @@ public class ProcessingThread implements Runnable {
         }
     }
 
+    @Override
+    public int getListeningPort() {
+        return 80;
+    }
 
     private String readFile(File file) throws IOException {
         try {

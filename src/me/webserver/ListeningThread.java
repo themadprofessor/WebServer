@@ -1,49 +1,42 @@
 package me.webserver;
 
-import com.sun.crypto.provider.TlsKeyMaterialGenerator;
 import me.util.Log;
 
-import javax.net.ssl.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.security.*;
-import java.security.cert.CertificateException;
-import java.util.ArrayList;
-import java.util.Base64;
 
 /**
- * Created by root on 10/04/15.
+ * Created by User on 27/04/2015.
  */
 public class ListeningThread implements Runnable {
-    public boolean stop;
-    private ServerSocket serverSocket;
-    private ArrayList<ProcessingThread> threads;
+    private ServerSocket server;
+    private Plugin plugin;
+    private PluginSecurityManager securityManager;
 
-    public ListeningThread(ServerSocket serverSocket) {
-        this.serverSocket = serverSocket;
+    public ListeningThread(Plugin plugin, PluginSecurityManager securityManager) {
+        this.plugin = plugin;
+        this.securityManager = securityManager;
+        this.securityManager.setEnabled(false);
+        try {
+            server = new ServerSocket(plugin.getListeningPort());
+        } catch (IOException e) {
+            Log.err(e);
+        }
     }
 
     @Override
     public void run() {
-        threads = new ArrayList<>();
-
-        String name = Thread.currentThread().getName();
-        while (!stop) {
-            Log.out("Thread [" + name + "] Is Waiting For A Request");
+        securityManager.setEnabled(false);
+        while (!server.isClosed()) {
             try {
-                Socket socket = serverSocket.accept();
-                ProcessingThread processingThread = new ProcessingThread(socket);
-                Thread thread = new Thread(processingThread);
+                Log.out("Thread " + Thread.currentThread().getId() + " Is Awaiting A Client");
+                Socket socket = server.accept();
+                Thread thread = new Thread(new PluginThread(plugin, socket, securityManager));
                 thread.start();
-                threads.add(processingThread);
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.err(e);
             }
         }
-
-        threads.forEach(thread -> thread.stop = true);
     }
 }

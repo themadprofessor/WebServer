@@ -1,11 +1,7 @@
-package me.webserver;
+package me.httphandler;
 
-import java.io.IOException;
-import java.net.Socket;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Locale;
 
 /**
  * Created by root on 10/04/15.
