@@ -42,12 +42,6 @@ public class PluginSecurityManager extends SecurityManager {
 
     @Override
     public void checkAccept(String host, int port) {
-        if (isEnabled == null) {
-            Log.out("ARGH");
-        }
-        if (isEnabled.get() == null) {
-            Log.out("FUUU");
-        }
         if (isEnabled.get())
             throw new SecurityException("Plugins Should Not Accept New Connections");
     }
@@ -65,9 +59,7 @@ public class PluginSecurityManager extends SecurityManager {
 
     @Override
     public void checkCreateClassLoader() {
-        if (isEnabled.get()) {
-            throw new SecurityException("Plugins Should Not Load Unloaded Classes ");
-        }
+
     }
 
     @Override

@@ -19,7 +19,11 @@ public class ListeningThread implements Runnable {
         this.securityManager = securityManager;
         this.securityManager.setEnabled(false);
         try {
-            server = new ServerSocket(plugin.getListeningPort());
+            if (plugin.getSSLContext() == null) {
+                server = new ServerSocket(plugin.getListeningPort());
+            } else {
+                server = plugin.getSSLContext().getServerSocketFactory().createServerSocket(plugin.getListeningPort());
+            }
         } catch (IOException e) {
             Log.err(e);
         }

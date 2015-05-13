@@ -1,6 +1,7 @@
 package me.httphandler;
 
 import me.util.Log;
+import me.webserver.Plugin;
 
 import java.io.*;
 import java.net.Socket;
@@ -11,16 +12,10 @@ import java.util.List;
 /**
  * Created by User on 27/04/2015.
  */
-public class Plugin implements me.webserver.Plugin {
+public class Main extends Plugin {
     private MediaType type;
     private final String endline = "\r\n";
 
-    @Override
-    public void init() {
-
-    }
-
-    @Override
     public void handle(Socket socket) {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -107,7 +102,6 @@ public class Plugin implements me.webserver.Plugin {
         }
     }
 
-    @Override
     public int getListeningPort() {
         return 80;
     }

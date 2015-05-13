@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/HTTPHandler/HTTPHandler.iml" filepath="$PROJECT_DIR$/HTTPHandler/HTTPHandler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HTTPSHandler/HTTPSHandler.iml" filepath="$PROJECT_DIR$/HTTPSHandler/HTTPSHandler.iml" />
       <module fileurl="file://$PROJECT_DIR$/Original/Original.iml" filepath="$PROJECT_DIR$/Original/Original.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Plugin/Plugin.iml" filepath="$PROJECT_DIR$/Plugin/Plugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/WebServer.iml" filepath="$PROJECT_DIR$/WebServer.iml" />
     </modules>
   </component>
